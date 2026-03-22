@@ -1,90 +1,94 @@
-# Obsidian Sample Plugin
+# 小红书长图导出 (XHS Exporter)
 
-This is a sample plugin for Obsidian (https://obsidian.md).
+[English](./README_en.md) | 中文
 
-This project uses TypeScript to provide type checking and documentation.
-The repo depends on the latest plugin API (obsidian.d.ts) in TypeScript Definition format, which contains TSDoc comments describing what it does.
+一键将 Obsidian Markdown 笔记导出为适合小红书发布的精美长图。
 
-This sample plugin demonstrates some of the basic functionality the plugin API can do.
-- Adds a ribbon icon, which shows a Notice when clicked.
-- Adds a command "Open modal (simple)" which opens a Modal.
-- Adds a plugin setting tab to the settings page.
-- Registers a global click event and output 'click' to the console.
-- Registers a global interval which logs 'setInterval' to the console.
+## 功能特性
 
-## First time developing plugins?
+- **智能分页切图**：自动将长内容切分为 1080x1440 标准小红书比例，支持智能防截断
+- **单张长图模式**：支持导出为完整长图
+- **主题支持**：浅色/深色/跟随系统主题
+- **日记风格头部**：可选展示头像、作者名、认证图标、发布日期
+- **水印功能**：自定义水印文字，防止盗图
+- **图片嵌入**：自动将本地图片和双链图片转换为 Base64，导出为独立图片
+- **高度可调**：左右边距、顶部/底部留白、整体缩放比例均可配置
 
-Quick starting guide for new plugin devs:
+## 安装
 
-- Check if [someone already developed a plugin for what you want](https://obsidian.md/plugins)! There might be an existing plugin similar enough that you can partner up with.
-- Make a copy of this repo as a template with the "Use this template" button (login to GitHub if you don't see it).
-- Clone your repo to a local development folder. For convenience, you can place this folder in your `.obsidian/plugins/your-plugin-name` folder.
-- Install NodeJS, then run `npm i` in the command line under your repo folder.
-- Run `npm run dev` to compile your plugin from `main.ts` to `main.js`.
-- Make changes to `main.ts` (or create new `.ts` files). Those changes should be automatically compiled into `main.js`.
-- Reload Obsidian to load the new version of your plugin.
-- Enable plugin in settings window.
-- For updates to the Obsidian API run `npm update` in the command line under your repo folder.
+### 方式一：社区插件市场（推荐）
 
-## Releasing new releases
+1. 打开 Obsidian 设置 → 第三方插件
+2. 关闭安全模式（如果未关闭）
+3. 搜索 "小红书长图导出" 或 "XHS Exporter"
+4. 点击安装并启用
 
-- Update your `manifest.json` with your new version number, such as `1.0.1`, and the minimum Obsidian version required for your latest release.
-- Update your `versions.json` file with `"new-plugin-version": "minimum-obsidian-version"` so older versions of Obsidian can download an older version of your plugin that's compatible.
-- Create new GitHub release using your new version number as the "Tag version". Use the exact version number, don't include a prefix `v`. See here for an example: https://github.com/obsidianmd/obsidian-sample-plugin/releases
-- Upload the files `manifest.json`, `main.js`, `styles.css` as binary attachments. Note: The manifest.json file must be in two places, first the root path of your repository and also in the release.
-- Publish the release.
+### 方式二：手动安装
 
-> You can simplify the version bump process by running `npm version patch`, `npm version minor` or `npm version major` after updating `minAppVersion` manually in `manifest.json`.
-> The command will bump version in `manifest.json` and `package.json`, and add the entry for the new version to `versions.json`
+1. 从 [ Releases ](https://github.com/joethei/obsidian-xhs-exporter/releases) 下载 `main.js`、`styles.css`、`manifest.json`
+2. 将文件放入 vault 的 `.obsidian/plugins/obsidian-xhs-exporter/` 目录下
+3. 重启 Obsidian 并在插件设置中启用
 
-## Adding your plugin to the community plugin list
+### 方式三：自行编译
 
-- Check the [plugin guidelines](https://docs.obsidian.md/Plugins/Releasing/Plugin+guidelines).
-- Publish an initial version.
-- Make sure you have a `README.md` file in the root of your repo.
-- Make a pull request at https://github.com/obsidianmd/obsidian-releases to add your plugin.
+1. 克隆本仓库到本地
+2. 安装依赖：`npm install` 或 `yarn`
+3. 编译插件：`npm run dev`（开发模式）或 `npm run build`（生产模式）
+4. 将生成的 `main.js`、`manifest.json`（和 `styles.css`如果有）复制到 `.obsidian/plugins/obsidian-xhs-exporter/` 目录
+5. 重启 Obsidian 并在插件设置中启用
 
-## How to use
+## 使用方法
 
-- Clone this repo.
-- Make sure your NodeJS is at least v16 (`node --version`).
-- `npm i` or `yarn` to install dependencies.
-- `npm run dev` to start compilation in watch mode.
+1. 打开任意 Markdown 笔记
+2. 使用快捷键 `Ctrl+Shift+X` 或在命令面板中搜索「导出当前笔记为小红书长图/切图」
+3. 等待导出完成，图片将保存到配置的文件夹
 
-## Manually installing the plugin
+## 配置说明
 
-- Copy over `main.js`, `styles.css`, `manifest.json` to your vault `VaultFolder/.obsidian/plugins/your-plugin-id/`.
+### 导出设置
 
-## Improve code quality with eslint
-- [ESLint](https://eslint.org/) is a tool that analyzes your code to quickly find problems. You can run ESLint against your plugin to find common bugs and ways to improve your code. 
-- This project already has eslint preconfigured, you can invoke a check by running`npm run lint`
-- Together with a custom eslint [plugin](https://github.com/obsidianmd/eslint-plugin) for Obsidan specific code guidelines.
-- A GitHub action is preconfigured to automatically lint every commit on all branches.
+| 设置项 | 说明 | 默认值 |
+|-------|------|-------|
+| 导出模式 | 分页切图或单张长图 | 分页切图 |
+| 导出文件夹 | 图片保存目录 | 小红书导出 |
+| 按日期创建子文件夹 | 自动创建 YYYYMMDDHHmm 文件夹 | 开启 |
 
-## Funding URL
+### 样式设置
 
-You can include funding URLs where people who use your plugin can financially support it.
+| 设置项 | 说明 | 默认值 |
+|-------|------|-------|
+| 水印文字 | 底部显示的水印 | @我的小红书账号 |
+| 启用水印 | 是否显示水印 | 开启 |
+| 左右边距 | 内容左右留白 (px) | 40 |
+| 分页顶部留白 | 每页顶部留白 (px) | 40 |
+| 分页底部留白 | 每页底部留白 (px) | 80 |
+| 整体缩放比例 | 内容缩放倍率 | 1.2 |
+| 强制主题 | 浅色/深色/跟随系统 | 浅色 |
 
-The simple way is to set the `fundingUrl` field to your link in your `manifest.json` file:
+### 日记头部设置
 
-```json
-{
-    "fundingUrl": "https://buymeacoffee.com"
-}
-```
+| 设置项 | 说明 | 默认值 |
+|-------|------|-------|
+| 启用日记头部 | 显示头像和作者信息 | 关闭 |
+| 作者名字 | 显示在头像旁边 | 作者 |
+| 显示官方认证图标 | 蓝 V 认证标识 | 开启 |
+| 头像路径 | 支持绝对路径或库内相对路径 | - |
+| 日期类型 | 修改时间/创建时间/当前时间 | 修改时间 |
 
-If you have multiple URLs, you can also do:
+## 常见问题
 
-```json
-{
-    "fundingUrl": {
-        "Buy Me a Coffee": "https://buymeacoffee.com",
-        "GitHub Sponsor": "https://github.com/sponsors",
-        "Patreon": "https://www.patreon.com/"
-    }
-}
-```
+**Q: 导出图片显示不完整？**
+A: 尝试调大「整体缩放比例」或调整边距设置。
 
-## API Documentation
+**Q: 图片切分位置不理想？**
+A: 分页模式会自动寻找空白区域作为切分点，确保文字不被截断。
 
-See https://docs.obsidian.md
+**Q: 主题样式不对？**
+A: 在设置中调整「强制主题」选项，或确保当前 Obsidian 主题正常加载。
+
+## 相关链接
+
+- [Obsidian 插件文档](https://docs.obsidian.md)
+- [dom-to-image-more](https://github.com/1904labs/dom-to-image-more) - 截图核心库
+
+## License

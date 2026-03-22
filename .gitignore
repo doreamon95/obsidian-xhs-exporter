@@ -1,22 +1,42 @@
-# vscode
-.vscode 
+# ========== 开发工具 ==========
+# VS Code
+.vscode
 
-# Intellij
+# GitHub workflows (releases are manual, CI not needed for this repo)
+.github
+
+# IntelliJ
 *.iml
 .idea
 
-# npm
+# ========== 构建与编译 ==========
+# npm 依赖
 node_modules
 
-# Don't include the compiled main.js file in the repo.
-# They should be uploaded to GitHub releases instead.
+# npm 锁文件
+package-lock.json
+yarn.lock
+pnpm-lock.yaml
+
+# 编译产物 (手动发布到 Release)
 main.js
 
-# Exclude sourcemaps
+# 版本兼容映射 (手动发布到 Release)
+versions.json
+
+# Source maps
 *.map
 
-# obsidian
+# ========== 运行数据 ==========
+# Obsidian 插件数据 (用户特定设置)
 data.json
 
-# Exclude macOS Finder (System Explorer) View States
+# npm 配置 (可能包含 token)
+.npmrc
+
+# ========== 系统文件 ==========
+# macOS Finder 查看状态
 .DS_Store
+
+# Windows thumbnail
+Thumbs.db
