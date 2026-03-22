@@ -2,9 +2,6 @@
 # VS Code
 .vscode
 
-# GitHub workflows (releases are manual, CI not needed for this repo)
-.github
-
 # IntelliJ
 *.iml
 .idea
